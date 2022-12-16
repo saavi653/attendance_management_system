@@ -89,6 +89,11 @@ class User extends Authenticatable
         return $this->hasMany(Leave::class)
             ->where('status','pending');
    }
+
+   public function TotalLeaves()
+   {
+        return $this->hasMany(Leave::class);
+   }
    
 }
 

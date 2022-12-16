@@ -16,6 +16,6 @@
     @error('email')
     {{ $message }}
     @enderror
-    <input type="submit" name="submit"> 
+    <input type="submit" name="submit" class="btn btn-secondary"> 
    
 </form>

@@ -13,6 +13,6 @@
     @error('password')
     {{ $message }}
     @enderror
-    <input type="submit" name="submit" value="LOGIN">
+    <input type="submit" name="submit" value="LOGIN" class="btn btn-secondary">
 </body>
 </html>
