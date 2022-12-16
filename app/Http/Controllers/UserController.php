@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $users = User::Employee();
         
-        return view('admin.index',['users' => $users]);
+        return view('admin.index', ['users' => $users]);
     }
 
     public function create()
@@ -48,13 +48,13 @@ class UserController extends Controller
         Notification::send($user, new UserNotification(Auth::user()));
 
         return redirect()->route('admin.dashboard')
-            ->with('success','user created successfully');
+            ->with('success', 'user created successfully');
     }
 
     public function edit(User $user)
     {
 
-        return view('admin.users.edit',['user' => $user]);
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     public function update(User $user, Request $request)
