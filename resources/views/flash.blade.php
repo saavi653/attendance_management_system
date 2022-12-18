@@ -1,5 +1,5 @@
 @if($msg=Session::get('success') )
-    <h3>{{ $msg }}</h3>
+    <h4>{{ $msg }}</h4>
     @elseif($msg=Session::get('error'))
-        <h3>{{ $msg }}</h3>
+        <h4>{{ $msg }}</h4>
 @endif

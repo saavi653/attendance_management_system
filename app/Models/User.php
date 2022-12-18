@@ -58,7 +58,7 @@ class User extends Authenticatable
 
    public function getIsEmployeeAttribute()
    {
-    
+        
         return $this->attributes['role_id'] == Role::EMPLOYEE;
    }
 
@@ -73,24 +73,26 @@ class User extends Authenticatable
     
         return ucfirst($this->attributes['firstname']).' '.ucfirst($this->attributes['lastname']);
    }
-
+           
    public function scopeAdmin($query)
    {
+
         return $query->where('role_id',Role::ADMIN)->get();
    }
 
    public function scopeEmployee($query)
    {
+
         return $query->where('role_id',Role::EMPLOYEE)->get();
    }
 
-   public function leaves()
+   public function pendingleaves()
    {
         return $this->hasMany(Leave::class)
             ->where('status','pending');
    }
 
-   public function TotalLeaves()
+   public function Leaves()
    {
         return $this->hasMany(Leave::class);
    }

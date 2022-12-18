@@ -2,12 +2,12 @@
 <form action="{{ route('users.store') }}" method="POST">
     @csrf
     <label>FIRST NAME</label>
-    <input type="textbox" name="firstname" value="{{ old('firstname') }}" required>
+    <input type="text" name="firstname" value="{{ old('firstname') }}" required>
     @error('firstname')
     {{ $message }}
     @enderror
     <label>LAST NAME</label>
-    <input type="textbox" name="lastname" value="{{ old('lastname') }}" required>
+    <input type="text" name="lastname" value="{{ old('lastname') }}" required>
     @error('lastname')
     {{ $message }}
     @enderror
@@ -16,13 +16,6 @@
     @error('email')
     {{ $message }}
     @enderror
-    <label>Role</label>
-        <select name="role_id" >
-            <option value="{{ $role->id }}"> {{ $role->name }}</option>
-        </select>
-            @error('role_id')
-            {{ $message }}
-            @enderror
     <input type="submit" name="submit" class="btn btn-secondary"> 
-   
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary" >CANCEL</a>
 </form>

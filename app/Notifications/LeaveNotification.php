@@ -44,6 +44,7 @@ class LeaveNotification extends Notification
      */
     public function toMail($notifiable)
     {
+       
         return (new MailMessage)
                     ->line('subject : '.$this->data['title'])
                     ->line($this->data['des'])

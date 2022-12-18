@@ -9,17 +9,21 @@ use Illuminate\Support\Facades\Auth;
 class Leave extends Model
 {
     use HasFactory;
+
+    CONST APPROVED = 'approved';
+    CONST REJECTED = 'rejected';
+
     protected $fillable=[
         'user_id',
         'subject',
         'description',
-        'leave_on',
+        'leave',
         'status'
     ];
+
     public function scopeLeaveExists($query, $attributes)
     {
-       return $query->where('user_id',Auth::id())
-            ->where('leave_on', $attributes['leave'])->get()->toArray();
+        return $query->where('user_id',Auth::id())
+            ->where('leave', $attributes['leave']);
     }
-   
 }

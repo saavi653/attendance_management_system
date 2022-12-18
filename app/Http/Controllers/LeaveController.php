@@ -18,62 +18,62 @@ class LeaveController extends Controller
     public function store( Request $request)
     {
         $current_date = now()->toDateString();
+
         $attributes = $request->validate([
 
             'title' => 'required|min:3|max:255|string',
             'des' => 'required|min:3|string',
-            'leave' => 'required|after:today',
-          
+            'leave' => 'required|after:today', 
         ]); 
-        
-        if(Leave::leaveExists($attributes))
+
+        if(Leave::leaveExists($attributes)->first())
         {
-            return back()->with('error', 'cant send leave for same date');
+            return back()->with('error', 'Cant Send Leave For Same Date');
         }
 
         Notification::send(User::admin(), new LeaveNotification(Auth::user(), $attributes));
         
         Leave::create([
+
             'user_id' => Auth::id(),
             'subject' => $attributes['title'],
             'description' => $attributes['des'],
-            'leave_on' => $attributes['leave'],
+            'leave' => $attributes['leave'],
         ]);
 
-        return back()->with('success', 'mail sent successfully');
+        return back()->with('success', 'Mail Sent Successfully');
     }
 
     public function approved(User $user,Leave $leave)
     {
-        $leave->where('user_id',$user->id)
-            ->where('leave_on',$leave->leave_on)
-            ->update([
-                'status' => 'approved'
+        $leave->update([
+
+            'status' => Leave::APPROVED
         ]);
 
         Attendance::create([
+
             'user_id' =>$user->id,
             'status' => Attendance::LEAVE,
-            'date' => $leave->leave_on
+            'date' => $leave->leave
         ]);
-
+        
         Notification::send($user, new ApprovedNotification(Auth::user(), $leave));    
     
-        return back()->with('success', 'leave approved');
+        return back()->with('success', 'Leave Approved');
         
     }
 
     public function rejected(User $user,Leave $leave)
     {
-        $leave->where('user_id',$user->id)
-            ->where('leave_on',$leave->leave_on)
-            ->update([
-                'status' => 'rejected'
+        $leave->update([
+
+            'status' => Leave::REJECTED
         ]);
 
         Notification::send($user, new RejectedNotification(Auth::user(), $leave));    
 
-        return back()->with('success', 'leave rejected');
+        return back()->with('success', 'Leave Rejected');
     }
    
 }

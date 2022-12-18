@@ -27,35 +27,47 @@ Route::get('/',function() {
         {
             return redirect()->route('employees.dashboard');
         }
-        elseif(Auth::user()->IsAdmin) 
-        {
-            return redirect()->route('admin.dashboard');
-        }
+
+        return redirect()->route('admin.dashboard');
     }    
     else
     {
         return view('login');
     }
     
-})->name('login');       
+})->name('login');         
 
 Route::post('login/check',[LoginController::class, 'login'])->name('login.check');
+
 Route::get('logout',[LogoutController::class, 'logout'])->name('logout');
 
-Route::get('admin', [UserController::class, 'index'])->name('admin.dashboard');
-Route::get('admin/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('admin/users/store', [UserController::class, 'store'])->name('users.store');
-Route::get('admin/users/{user:slug}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::post('admin/users/{user}/update', [UserController::class, 'update'])->name('users.update');
-Route::delete('admin/users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
+Route::middleware(['auth'])->group(function(){
 
-Route::get('users/{user:slug}/create-password', [SetPasswordController::class, 'create'])->name('password.create');
-Route::post('users/{user:slug}/store-password', [SetPasswordController::class, 'store'])->name('password.store');
+    Route::controller(UserController::class)->group(function () {
 
-Route::get('employee/dashboard', [EmployeeController::class, 'index'])->name('employees.dashboard');
+        Route::get('admin', 'index')->name('admin.dashboard');
+        Route::get('admin/users/create', 'create')->name('users.create');
+        Route::post('admin/users/store', 'store')->name('users.store');
+        Route::get('admin/users/{user:slug}/edit', 'edit')->name('users.edit');
+        Route::post('admin/users/{user}/update', 'update')->name('users.update');
+        Route::delete('admin/users/{user}/delete', 'delete')->name('users.delete');
+    });
 
-Route::post('employee/attendance', [AttendenceController::class, 'store'])->name('attendance.store');
+    Route::controller(SetPasswordController::class)->group(function () {
 
-Route::post('employee/leave', [LeaveController::class, 'store'])->name('leave.store');
-Route::get('employee/{user}/leave/{leave}/status/approved', [LeaveController::class, 'approved'])->name('employees.leave.status.approved');
-Route::get('employee/{user}/leave/{leave}/status/rejected', [LeaveController::class, 'rejected'])->name('employees.leave.status.rejected');
+        Route::get('users/{user:slug}/create-password',  'create')->name('password.create');
+        Route::post('users/{user:slug}/store-password',  'store')->name('password.store');
+    });
+
+    Route::get('employee/dashboard', [EmployeeController::class, 'index'])->name('employees.dashboard');
+
+    Route::post('employee/attendance', [AttendenceController::class, 'store'])->name('attendance.store');
+
+    Route::controller(LeaveController::class)->group(function () {
+
+        Route::post('employee/leave', 'store')->name('leave.store');
+        Route::get('employee/{user}/leave/{leave}/status/approved', 'approved')->name('employees.leave.status.approved');
+        Route::get('employee/{user}/leave/{leave}/status/rejected', 'rejected')->name('employees.leave.status.rejected');
+    }); 
+
+});

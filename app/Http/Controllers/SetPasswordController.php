@@ -17,17 +17,19 @@ class SetPasswordController extends Controller
     public function store(User $user, Request $request)
     {
        $attributes = $request->validate([
-        'email' => 'required',
-        'password' => 'required|min:3|max:255',
-        'confirm_password' => 'same:password'
+            
+            'email' => 'required',
+            'password' => 'required|min:3|max:255',
+            'confirm_password' => 'same:password'
        ]);
 
        $user->update([
+
             'password' => Hash::make($attributes['password']),
             'email_status' => true 
        ]);
 
-       return redirect('/')->with('success','password set successfully');
+       return redirect('/')->with('success','Password Set Successfully');
      
     }
 

@@ -15,18 +15,22 @@
     @error('title')
     {{ $message }}
     @enderror
+
     <label>DESCRIPTION</label>
-    <textarea name="des"  placeholder="add description " value="{{ old('des') }}" required></textarea>
+    <textarea name="des" required>{{ old('des') }}</textarea>
     @error('des')
     {{ $message }}
     @enderror
+
     <label>Enter date for leave</label>
     <input type="date" name="leave" required>
     @error('leave')
     {{ $message }}
     @enderror
+
     <input type="submit" value="leave" class="btn btn-secondary">
 </form>
+
 <h4>LEAVE DETAILS </h4>
 <table class="table table-success table-striped">
     <tr>
@@ -34,9 +38,9 @@
         <th>SUBJECT</th>
         <th>STATUS</th>
 </tr>
-@foreach(Auth::user()->TotalLeaves as $leave)  
+@foreach(Auth::user()->Leaves as $leave)  
 <tr> 
-    <td>{{ $leave->leave_on}}</td>
+    <td>{{ $leave->leave}}</td>
     <td>{{ $leave->subject}}</td>
     <td>{{ $leave->status}}</td>
 @endforeach

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('subject');
             $table->text('description');
-            $table->date('leave_on');
+            $table->date('leave');
             $table->enum('status', ['approved','pending', 'rejected'])->default('pending');
             $table->timestamps();
         });

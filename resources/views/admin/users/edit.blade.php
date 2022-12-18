@@ -2,12 +2,12 @@
 <form action="{{ route('users.update' ,$user) }}" method="POST">
     @csrf
     <label>FIRST NAME</label>
-    <input type="textbox" name="firstname" value="{{ $user->firstname }}" required>
+    <input type="text" name="firstname" value="{{ $user->firstname }}" required>
     @error('firstname')
     {{ $message }}
     @enderror
     <label>LAST NAME</label>
-    <input type="textbox" name="lastname" value="{{ $user->lastname }}" required>
+    <input type="text" name="lastname" value="{{ $user->lastname }}" required>
     @error('lastname')
     {{ $message }}
     @enderror
@@ -17,5 +17,5 @@
     {{ $message }}
     @enderror
     <input type="submit" name="submit" class="btn btn-secondary"> 
-   
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary" >CANCEL</a>
 </form>

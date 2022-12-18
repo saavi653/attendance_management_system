@@ -1,5 +1,6 @@
 @include('layout.main')
 @include('flash')
+<h3>WELCOME ADMIN </h3> 
 <a href="{{ route('logout') }}" >LOGOUT </a><br>
 <a href="{{ route('users.create') }}">CREATE </a>
 <table class="table table-success table-striped">
@@ -20,7 +21,7 @@
         DELETE
     </th>
     <th>
-        LEAVES_DATE
+        LEAVES
     </th>
 </tr>
 @foreach($users as $user)
@@ -34,9 +35,9 @@
         @method('delete')
         <td><input type="submit"  name="delete" value="delete" class="btn btn-secondary"></td>
     </form>
-    @foreach($user->leaves as $leave)
+    @foreach($user->pendingLeaves as $leave)
     <td> 
-        {{ $leave->leave_on }}
+        {{ $leave->leave }}
         <a href="{{ route('employees.leave.status.approved', [$user, $leave]) }}" class="btn btn-secondary">
             approved
         </a> 

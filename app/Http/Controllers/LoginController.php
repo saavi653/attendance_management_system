@@ -16,7 +16,6 @@ class LoginController extends Controller
 
             'email' => 'required|email|min:3|max:255',
             'password' => 'required|min:3|max:255'
-            
         ]);
       
         if($user)
@@ -24,20 +23,21 @@ class LoginController extends Controller
             if($user->email_status)
             { 
                 if(Auth::attempt($attributes)) 
-                {    
+                {   
                     if(Auth::user()->is_Employee)
                     {
                         return redirect()->route('employees.dashboard');
                     }
-                    
-                    return redirect()->route('admin.dashboard')->with('success', 'welcome admin');
+         
+                    return redirect()->route('admin.dashboard');
                 }
             
-                return back()->with('error','incorrect credential'); 
+                return back()->with('error','Incorrect Credential'); 
             }    
-            return back()->with('error','user inactive');  
+            return back()->with('error','User Inactive');  
         }
-        return back()->with('error', 'user does not exist');
+
+        return back()->with('error', 'User Does Not Exist');
      }    
    
 }

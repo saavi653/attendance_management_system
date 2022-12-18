@@ -8,10 +8,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserNotification extends Notification
+class SetPasswordNotification extends Notification
 {
     use Queueable;
     private $sender;
+
     /**
      * Create a new notification instance.
      *
@@ -30,7 +31,7 @@ class UserNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail','database'];
     }
 
     /**
@@ -42,9 +43,9 @@ class UserNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('welcome '.$notifiable->firstname)
-                    ->line('please set your initial password')
-                    ->action('SET PASSWORD', route('password.create', $notifiable) );
+        ->line('welcome '.$notifiable->firstname)
+        ->line('please set your initial password')
+        ->action('SET PASSWORD', route('password.create', $notifiable) );      
     }
 
     /**
@@ -56,7 +57,9 @@ class UserNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'initial password set by '.$notifiable->email
+
+            'message' => 'initial password set by '.$notifiable->email  
         ];
     }
 }
+
