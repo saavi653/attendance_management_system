@@ -15,9 +15,9 @@ class Attendance extends Model
         'date'
     ];
 
-    CONST ABSENT=0;
-    CONST PRESENT=1;
-    CONST LEAVE=2;
+    CONST ABSENT = 'absent';
+    CONST PRESENT = 'present';
+    CONST LEAVE = 'leave';
 
     public function scopeLastRecord($query)
     {
