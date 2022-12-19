@@ -19,18 +19,22 @@ class SetPasswordController extends Controller
        $attributes = $request->validate([
             
             'email' => 'required',
-            'password' => 'required|min:3|max:255',
+            'password' => 'required|min:8|max:255',
             'confirm_password' => 'same:password'
        ]);
 
-       $user->update([
+       if($user->password==null)
+        {
+            $user->update([
 
-            'password' => Hash::make($attributes['password']),
-            'email_status' => true 
-       ]);
+                    'password' => Hash::make($attributes['password']),
+                    'email_status' => true 
+            ]);
 
-       return redirect('/')->with('success','Password Set Successfully');
-     
+            return redirect('/')->with('success','Password Set Successfully');
+        }   
+
+        return redirect('/')->with('error','Cant Set Password Again');
     }
 
 

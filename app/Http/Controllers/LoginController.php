@@ -10,35 +10,19 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-       $user=User::where('email', $request->email)->first();
-    
         $attributes=$request->validate([
 
-            'email' => 'required|email|min:3|max:255',
-            'password' => 'required|min:3|max:255'
+            'email' => 'required',
+            'password' => 'required'
         ]);
-      
-        if($user)
-        {
-            if($user->email_status)
-            { 
-                if(Auth::attempt($attributes)) 
-                {   
-                    if(Auth::user()->is_Employee)
-                    {
-                        return redirect()->route('employees.dashboard');
-                    }
-         
-                    return redirect()->route('admin.dashboard');
-                }
-            
-                return back()->with('error','Incorrect Credential'); 
-            }    
-            return back()->with('error','User Inactive');  
+
+        if(Auth::attempt($attributes)) 
+        {  
+            return redirect('/');
         }
 
-        return back()->with('error', 'User Does Not Exist');
-     }    
+        return back()->with('error','Incorrect Credential OR User Inactive '); 
+    }    
    
 }
 

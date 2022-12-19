@@ -21,6 +21,9 @@
         DELETE
     </th>
     <th>
+        ATTENDANCE-DETAIL
+    </th>
+    <th>
         LEAVES
     </th>
 </tr>
@@ -35,6 +38,7 @@
         @method('delete')
         <td><input type="submit"  name="delete" value="delete" class="btn btn-secondary"></td>
     </form>
+    <td><a href="{{ route('users.attendance.show', $user) }}" class="btn btn-secondary">ATTENDENCE</a></td>
     @foreach($user->pendingLeaves as $leave)
     <td> 
         {{ $leave->leave }}

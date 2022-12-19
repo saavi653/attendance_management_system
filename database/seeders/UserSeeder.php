@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'email_status' => 1,
             'status' =>1,
             'slug' => 'adminsharma',
-            'password' => Hash::make('admin12'),
+            'password' => Hash::make('admin123'),
             'created_at' => now(),
             'updated_at' => now()
         ]);

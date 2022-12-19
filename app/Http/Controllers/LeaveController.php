@@ -21,8 +21,8 @@ class LeaveController extends Controller
 
         $attributes = $request->validate([
 
-            'title' => 'required|min:3|max:255|string',
-            'des' => 'required|min:3|string',
+            'title' => 'required|min:3|max:255',
+            'des' => 'required|min:3',
             'leave' => 'required|after:today', 
         ]); 
 

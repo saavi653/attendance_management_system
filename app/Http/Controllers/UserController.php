@@ -33,7 +33,7 @@ class UserController extends Controller
 
             'firstname' => 'required|string|min:3|max:255',
             'lastname' => 'required|string|min:3|max:255',
-            'email' => 'required|email|min:3|max:255',
+            'email' => 'required|email|min:3|max:255|unique:users',
         ]);
 
         $attributes += [
@@ -60,9 +60,9 @@ class UserController extends Controller
     {
         $attributes = $request->validate([
 
-            'firstname' => 'required|string|min:3|max:255',
-            'lastname' => 'required|string|min:3|max:255',
-            'email' => 'required|email|min:3|max:255'
+            'firstname' => 'required|alpha|min:3|max:255',
+            'lastname' => 'required|alpha|min:3|max:255',
+            'email' => 'required|email|min:3|max:255|unique:users'
         ]);
 
         $user->update($attributes);
@@ -70,6 +70,12 @@ class UserController extends Controller
         return redirect()->route('admin.dashboard')
             ->with('success', 'User Updated Successfully');
     }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', ['user' => $user]);
+    }
+
     public function delete(User $user)
     {
         $user->delete();

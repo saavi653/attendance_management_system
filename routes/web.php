@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/',function() {
-    if(Auth::check()) 
+    if (Auth::check()) 
     {
-        if(Auth::user()->IsEmployee)
+        if (Auth::user()->IsEmployee)
         {
             return redirect()->route('employees.dashboard');
         }
@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('admin/users/store', 'store')->name('users.store');
         Route::get('admin/users/{user:slug}/edit', 'edit')->name('users.edit');
         Route::post('admin/users/{user}/update', 'update')->name('users.update');
+        Route::get('admin/users/{user}/attendance/show', 'show')->name('users.attendance.show');
         Route::delete('admin/users/{user}/delete', 'delete')->name('users.delete');
     });
 
@@ -59,9 +60,11 @@ Route::middleware(['auth'])->group(function(){
         Route::post('users/{user:slug}/store-password',  'store')->name('password.store');
     });
 
-    Route::get('employee/dashboard', [EmployeeController::class, 'index'])->name('employees.dashboard');
+    Route::get('employee/dashboard', [EmployeeController::class, 'index'])
+        ->name('employees.dashboard');
 
-    Route::post('employee/attendance', [AttendenceController::class, 'store'])->name('attendance.store');
+    Route::post('employee/attendance', [AttendenceController::class, 'store'])
+        ->name('attendance.store');
 
     Route::controller(LeaveController::class)->group(function () {
 

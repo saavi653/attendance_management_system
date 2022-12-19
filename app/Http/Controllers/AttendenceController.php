@@ -21,7 +21,7 @@ class AttendenceController extends Controller
                 return back()->with('error', 'Attendance Already Marked');
             } 
 
-            //absent functionality
+             //absent functionality
             $previous_date=Carbon::parse($user->date);
             $diff=now()->diffInDays($previous_date);
             if($diff>1)
